@@ -13,7 +13,7 @@ export default function Navbar() {
     <header className="px-4 lg:px-10 h-14 flex items-center border-b">
       <div className="flex items-center justify-center">
         <Link href="#" className="flex items-center justify-center">
-          <img src="./src/assets/react.svg" className="size-6" />
+          <img src="src/assets/react.svg" className="size-6" />
           <span className="sr-only">Acme Inc</span>
         </Link>
       </div>
