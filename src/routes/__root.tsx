@@ -1,12 +1,14 @@
-import Landing from "@/pages/lading-page";
+import Navbar from "@/components/shared/navbar";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <Landing />
-      <Outlet />
+      <div className="flex flex-col min-h-dvh">
+        <Navbar />
+        <Outlet />
+      </div>
       <TanStackRouterDevtools />
     </>
   ),
