@@ -1,8 +1,13 @@
 import Navbar from "@/components/shared/navbar";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { type AuthContext } from "@/lib/supabase";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-export const Route = createRootRoute({
+type RouterContext = {
+  auth: AuthContext;
+};
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <div className="flex flex-col min-h-dvh">
