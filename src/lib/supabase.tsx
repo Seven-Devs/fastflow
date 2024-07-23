@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react-refresh/only-export-components */
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { createClient, Session } from "@supabase/supabase-js";
 
@@ -44,3 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

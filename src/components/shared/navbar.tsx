@@ -7,8 +7,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/lib/supabase";
+import { Button } from "../ui/button";
 
 export default function Navbar() {
+  const session = useAuth();
+
   return (
     <header className="px-4 lg:px-10 h-14 flex items-center border-b">
       <div className="flex items-center justify-center">
@@ -37,21 +41,35 @@ export default function Navbar() {
           About
         </Link>
       </nav>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="h-9 w-9">
-            <AvatarImage src="src/assets/placeholder-user.svg" />
-            <AvatarFallback>JP</AvatarFallback>
-            <span className="sr-only">Toggle user menu</span>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>My Account</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div>
+        {session?.isAuthenticated ? (
+          <Button variant={"outline"} type="submit" className="w-full">
+            Sign Up
+          </Button>
+        ) : (
+          <>
+            <Button variant={"outline"} type="submit" className="w-full">
+              <Link to="/dashboard" />
+              Dashboard
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="h-9 w-9">
+                  <AvatarImage src="src/assets/placeholder-user.svg" />
+                  <AvatarFallback>JP</AvatarFallback>
+                  <span className="sr-only">Toggle user menu</span>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>My Account</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )}
+      </div>
     </header>
   );
 }
