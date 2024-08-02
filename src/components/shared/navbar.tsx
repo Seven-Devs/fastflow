@@ -7,11 +7,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAuth } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { Button } from "../ui/button";
+import { useAuth } from "@/hooks/auth";
 
 export default function Navbar() {
   const session = useAuth();
+  const login = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <header className="px-4 lg:px-10 h-14 flex items-center border-b">
@@ -42,20 +52,26 @@ export default function Navbar() {
         </Link>
       </nav>
       <div>
-        {session?.isAuthenticated ? (
-          <Button variant={"outline"} type="submit" className="w-full">
+        {!session?.session?.user ? (
+          <Button
+            onClick={login}
+            variant={"outline"}
+            type="submit"
+            className="w-full"
+          >
             Sign Up
           </Button>
         ) : (
-          <>
-            <Button variant={"outline"} type="submit" className="w-full">
-              <Link to="/dashboard" />
-              Dashboard
-            </Button>
+          <div className="flex gap-8">
+            <Link to="/dashboard">
+              <Button variant={"outline"} type="submit" className="w-full">
+                Dashboard
+              </Button>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-9 w-9">
-                  <AvatarImage src="src/assets/placeholder-user.svg" />
+                  <AvatarImage src={session?.user?.user_metadata?.picture} />
                   <AvatarFallback>JP</AvatarFallback>
                   <span className="sr-only">Toggle user menu</span>
                 </Avatar>
@@ -64,10 +80,10 @@ export default function Navbar() {
                 <DropdownMenuItem>My Account</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </>
+          </div>
         )}
       </div>
     </header>

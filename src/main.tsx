@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import "./globals.css";
-import { AuthProvider, supabase } from "./lib/supabase";
 import React from "react";
+import { AuthProvider, useAuth } from "./hooks/auth";
 
 const router = createRouter({
   routeTree,
@@ -18,7 +18,7 @@ declare module "@tanstack/react-router" {
 }
 
 function InnerApp() {
-  const auth = supabase.auth.getSession();
+  const auth = useAuth();
   return <RouterProvider router={router} context={{ auth }} />;
 }
 
