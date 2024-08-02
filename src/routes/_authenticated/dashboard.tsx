@@ -1,5 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import Workflow from "@/pages/workflow-page";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/_authenticated/dashboard')({
-  component: () => <div>Hello /_authenticated/dashboard!</div>
-})
+export const Route = createFileRoute("/_authenticated/dashboard")({
+  component: () => <Workflow />,
+});
